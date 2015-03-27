@@ -11,15 +11,15 @@
 				$authProvider = $hybridauth->authenticate($provider);
 				$user_profile = $authProvider->getUserProfile();
 				
-				if($user_profile && isset($user_profile->identifier)){
-					/*echo "<b>Name</b> :".$user_profile->displayName."<br>";
-					echo "<b>Profile URL</b> :".$user_profile->profileURL."<br>";
-					echo "<b>Image</b> :".$user_profile->photoURL."<br> ";
-					echo "<img src='".$user_profile->photoURL."'/><br>";
-					echo "<b>Email</b> :".$user_profile->email."<br>";	        		        		        	
-					echo "<br> <a href='logout.php'>Logout</a>";*/
-					
+				$_SESSION['provider'] = $authProvider;
+				if ($_SESSION['provider']->isUserConnected()) {
+					$_SESSION['estado'] = 'Autenticado';
 					header("Location: http://45.55.135.209/sitios/menu.php");
+				}
+				else {
+					echo "You're not authorised to enter this page. Please provide your right credentials. You will be redirected to Log-in pagw in three seconds";
+					sleep(3);
+					header("Location: http://45.55.135.209/");
 				}
 			}
 			catch( Exception $e ) { 
@@ -38,9 +38,6 @@
                                  break;
                         case 8 : echo "Provider does not support this feature."; break;
                 }
-                // well, basically your should not display this to the end user, just give him a hint and move on..
-                //echo "<br /><br /><b>Original error message:</b> " . $e->getMessage();
-                //echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";
 				echo "<br> <a href='login.html'>Regresar</a>";
 			}
         }
