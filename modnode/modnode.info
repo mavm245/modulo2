@@ -1,0 +1,5 @@
+name = "modnode"
+description = "Modulo utilizando node_load()"
+version = VERSION
+package = becarios
+core = 7.x

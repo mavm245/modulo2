@@ -1,0 +1,178 @@
+<?php
+/**
+ * Modulo Drupal JSON Web Service v0.01
+ * Equipo Mario
+ */
+function modnode_menu() {
+    $items = array();
+    $items['modrupal/json'] = array(
+        'title' => 'modnode',
+        'page callback' => 'modnode_api',
+        'access arguments' => array('access content')
+    );
+    return $items;
+}
+function modnode_api($nid = null) {
+    //if($nid) {
+    //    drupal_json_output(node_load($nid));
+    //    drupal_exit();
+    //}
+
+    if (isset($_POST['index']))
+        $index = $_POST['index'];
+        if ($index==1)
+      {
+
+
+        $query = db_select('node', 'n');
+    $query->fields('n', array('nid'))
+        ->condition('n.status', 1);
+    $result = $query->execute();
+
+    //$nid=1;
+    //$node=node_load($nid);
+
+    //$body = field_get_items('node',$node, 'body');
+    //print $body[0]['value'];
+
+    $articulos = array();
+    while ($entrada = $result->fetchAssoc()) {
+        $node=node_load($entrada['nid']);
+        //$link = $entrada['nid'];
+        //$titulo = $entrada['title'];
+        //$categoria = $entrada['name'];
+        //$imagen = $entrada['filename'];
+        //$cuerpo = $entrada['body_value'];
+        //$comentarios=$entrada['comment_body_value'];
+        //$fecha = format_date($entrada['created'], 'custom', 'j M Y');
+        $titulo = $node->title;
+        $cuerpo = field_get_items('node',$node, 'body');
+        $imagen = field_get_items('node',$node, 'field_image');
+        $categoria = field_get_items('node', $node, 'field_tags');
+        $fecha = format_date($node->created,'custom', 'j M Y');
+        $articulos[$entrada['nid']] = array(
+            'titulo' => $titulo,
+//            'categoria' => field_view_value('node', $node, 'field_tags', $categoria[0]),
+            'imagen' => "http://45.55.135.210/drupal/sites/default/files/styles/large/public/field/image/".$imagen[0]['filename'],
+            'cuerpo' => $cuerpo[0]['value'],
+            //'comentarios' => $comentarios,
+            'fecha' => $fecha
+        );
+    }
+    echo json_encode($articulos);
+
+    /*
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+        ->propertyCondition('status', 1)
+        ->propertyOrderBy('created', 'DESC')
+        ->range(0, 5);
+    $results = $query->execute();
+    $nids = array_keys($results['node']);
+    $nodes = node_load_multiple($nids);
+    drupal_json_output($nodes);
+    drupal_exit();
+    */}elseif($index==2){
+
+            $query = db_select('node', 'n');
+            $query->fields('n', array('nid'))
+                ->condition('n.status', 1);
+            $result = $query->execute();
+
+            $articulos = array();
+            while ($entrada = $result->fetchAssoc()) {
+                $node=node_load($entrada['nid']);
+                $titulo = $node->title;
+                $cuerpo = field_get_items('node',$node, 'body');
+                $imagen = field_get_items('node',$node, 'field_image');
+  //              $categoria = field_get_items('node', $node, 'field_tags');
+                $fecha = format_date($node->created,'custom', 'j M Y');
+                $articulos[$entrada['nid']] = array(
+                    'titulo' => $titulo,
+                    'categoria' => field_view_value('node', $node, 'field_tags', $categoria[0]),
+                    'imagen' => "http://www.gcorrea.com/sites/www.gcorrea.com/files/styles/large/public/field/image/".$imagen[0]['filename'],
+                    'cuerpo' => $cuerpo[0]['value'],
+                    'fecha' => $fecha
+                );
+            }
+            echo json_encode($articulos);
+
+        }elseif($index==3){
+
+            $query = db_select('node', 'n');
+            $query->fields('n', array('nid'))
+                ->condition('n.status', 1);
+            $result = $query->execute();
+
+            $articulos = array();
+            while ($entrada = $result->fetchAssoc()) {
+                $node=node_load($entrada['nid']);
+                $titulo = $node->title;
+                $cuerpo = field_get_items('node',$node, 'body');
+                $imagen = field_get_items('node',$node, 'field_image');
+                $categoria = field_get_items('node', $node, 'field_tags');
+                $fecha = format_date($node->created,'custom', 'j M Y');
+                $articulos[$entrada['nid']] = array(
+                    'titulo' => $titulo,
+    //                'categoria' => field_view_value('node', $node, 'field_tags', $categoria[0]),
+                    'imagen' => "http://www.mvasquez.com/sites/www.mvasquez.com/files/styles/large/public/field/image/".$imagen[0]['filename'],
+                    'cuerpo' => $cuerpo[0]['value'],
+                    'fecha' => $fecha
+                );
+            }
+            echo json_encode($articulos);
+
+        }elseif($index==4){
+
+            $query = db_select('node', 'n');
+            $query->fields('n', array('nid'))
+                ->condition('n.status', 1);
+            $result = $query->execute();
+
+            $articulos = array();
+            while ($entrada = $result->fetchAssoc()) {
+                $node=node_load($entrada['nid']);
+                $titulo = $node->title;
+                $cuerpo = field_get_items('node',$node, 'body');
+                $imagen = field_get_items('node',$node, 'field_image');
+                $categoria = field_get_items('node', $node, 'field_tags');
+                $fecha = format_date($node->created,'custom', 'j M Y');
+                $articulos[$entrada['nid']] = array(
+                    'titulo' => $titulo,
+      //              'categoria' => field_view_value('node', $node, 'field_tags', $categoria[0]),
+                    'imagen' => "http://www.nmorales.com/sites/www.nmorales.com/files/styles/large/public/field/image/".$imagen[0]['filename'],
+                    'cuerpo' => $cuerpo[0]['value'],
+                    'fecha' => $fecha
+                );
+            }
+            echo json_encode($articulos);
+
+        }elseif($index==5){
+
+            $query = db_select('node', 'n');
+            $query->fields('n', array('nid'))
+                ->condition('n.status', 1);
+            $result = $query->execute();
+
+            $articulos = array();
+            while ($entrada = $result->fetchAssoc()) {
+                $node=node_load($entrada['nid']);
+                $titulo = $node->title;
+                $cuerpo = field_get_items('node',$node, 'body');
+                $imagen = field_get_items('node',$node, 'field_image');
+        //        $categoria = field_get_items('node', $node, 'field_tags');
+                $fecha = format_date($node->created,'custom', 'j M Y');
+                $articulos[$entrada['nid']] = array(
+                    'titulo' => $titulo,
+                    'categoria' => field_view_value('node', $node, 'field_tags', $categoria[0]),
+                    'imagen' => "http://www.varteaga.com/sites/www.varteaga.com/files/styles/large/public/field/image/".$imagen[0]['filename'],
+                    'cuerpo' => $cuerpo[0]['value'],
+                    'fecha' => $fecha
+                );
+            }
+            echo json_encode($articulos);
+
+        }else{
+            echo "Revisa tu peticion.";
+        }
+}
