@@ -1,0 +1,166 @@
+<?php
+
+function modrupal_menu() {
+
+    $items['modrupal/json'] = array(
+        'title' => 'JSONv2',
+        'page callback' => 'modrupal_list',
+        'access callback' => TRUE
+    );
+    return $items;
+}
+
+function modrupal_list()
+{
+        $query = db_select('node', 'n');
+        $query->join('field_data_body', 'fdb', 'n.nid=fdb.entity_id');
+        $query->join('file_managed', 'fm', 'n.nid=fm.fid');
+        $query->join('taxonomy_term_data', 'ttd', 'n.nid=ttd.tid');
+        //$query->join('field_data_comment_body', 'fdcb', 'n.nid=fdcb.entity_id');
+        $query->leftJoin('field_data_comment_body', 'fdcb', 'n.nid=fdcb.entity_id');
+        $query->fields('n', array('nid', 'title', 'created'))
+            ->fields('fdb', array('body_value'))
+            ->fields('fm', array('filename'))
+            ->fields('ttd', array('name'))
+            ->fields('fdcb', array('comment_body_value'))
+            ->condition('n.status', 1)
+            ->orderBy('created', 'ASC');
+        $result = $query->execute();
+
+    if (isset($_POST['index']))
+        $index = $_POST['index'];
+        if ($index==1)
+    {
+
+        $articulos = array();
+        while ($entrada = $result->fetchAssoc()) {
+	    $link = $entrada['nid'];
+            $titulo = $entrada['title'];
+            $categoria = $entrada['name'];
+            $imagen = $entrada['filename'];
+            $cuerpo = $entrada['body_value'];
+            $comentarios=$entrada['comment_body_value'];
+            $fecha = format_date($entrada['created'], 'custom', 'j M Y');
+
+            $articulos[$entrada['nid']] = array(
+		'articulo' => "http://45.55.135.210/drupal/?q=node/".$link,
+		#'articulo' => "http://www.mvasquez.com/?q=node/".$link,
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'imagen' => "http://45.55.135.210/drupal/sites/default/files/styles/large/public/field/image/".$imagen,
+                'cuerpo' => $cuerpo,
+                'comentarios' => $comentarios,
+                'fecha' => $fecha
+            );
+        }
+        echo json_encode($articulos);
+    }
+else if ($index==2)
+    {
+
+        $articulos = array();
+        while ($entrada = $result->fetchAssoc()) {
+	    $link = $entrada['nid'];
+            $titulo = $entrada['title'];
+            $categoria = $entrada['name'];
+            $imagen = $entrada['filename'];
+            $cuerpo = $entrada['body_value'];
+            $comentarios=$entrada['comment_body_value'];
+            $fecha = format_date($entrada['created'], 'custom', 'j M Y');
+
+            $articulos[$entrada['nid']] = array(
+		#'articulo' => "http://45.55.135.210/drupal/?q=node/".$link,
+		'articulo' => "http://www.gcorrea.com/?q=node/".$link,
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'imagen' => "http://www.gcorrea.com/sites/www.gcorrea.com/files/styles/large/public/field/image/".$imagen,
+                'cuerpo' => $cuerpo,
+                'comentarios' => $comentarios,
+                'fecha' => $fecha
+            );
+        }
+        echo json_encode($articulos);
+    }
+
+else if ($index==3)
+    {
+
+        $articulos = array();
+        while ($entrada = $result->fetchAssoc()) {
+	    $link = $entrada['nid'];
+            $titulo = $entrada['title'];
+            $categoria = $entrada['name'];
+            $imagen = $entrada['filename'];
+            $cuerpo = $entrada['body_value'];
+            $comentarios=$entrada['comment_body_value'];
+            $fecha = format_date($entrada['created'], 'custom', 'j M Y');
+
+            $articulos[$entrada['nid']] = array(
+		#'articulo' => "http://45.55.135.210/drupal/?q=node/".$link,
+		'articulo' => "http://www.mvasquez.com/?q=node/".$link,
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'imagen' => "http://www.mvasquez.com/sites/www.mvasquez.com/files/styles/large/public/field/image/".$imagen,
+                'cuerpo' => $cuerpo,
+                'comentarios' => $comentarios,
+                'fecha' => $fecha
+            );
+        }
+        echo json_encode($articulos);
+    }
+else if ($index==4)
+    {
+
+        $articulos = array();
+        while ($entrada = $result->fetchAssoc()) {
+	    $link = $entrada['nid'];
+            $titulo = $entrada['title'];
+            $categoria = $entrada['name'];
+            $imagen = $entrada['filename'];
+            $cuerpo = $entrada['body_value'];
+            $comentarios=$entrada['comment_body_value'];
+            $fecha = format_date($entrada['created'], 'custom', 'j M Y');
+
+            $articulos[$entrada['nid']] = array(
+		#'articulo' => "http://45.55.135.210/drupal/?q=node/".$link,
+		'articulo' => "http://www.nmorales.com/?q=node/".$link,
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'imagen' => "http://www.nmorales.com/sites/www.nmorales.com/files/styles/large/public/field/image/".$imagen,
+                'cuerpo' => $cuerpo,
+                'comentarios' => $comentarios,
+                'fecha' => $fecha
+            );
+        }
+        echo json_encode($articulos);
+    }
+else if ($index==5)
+    {
+
+        $articulos = array();
+        while ($entrada = $result->fetchAssoc()) {
+	    $link = $entrada['nid'];
+            $titulo = $entrada['title'];
+            $categoria = $entrada['name'];
+            $imagen = $entrada['filename'];
+            $cuerpo = $entrada['body_value'];
+            $comentarios=$entrada['comment_body_value'];
+            $fecha = format_date($entrada['created'], 'custom', 'j M Y');
+
+            $articulos[$entrada['nid']] = array(
+		#'articulo' => "http://45.55.135.210/drupal/?q=node/".$link,
+		'articulo' => "http://www.varteaga.com/?q=node/".$link,
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'imagen' => "http://www.varteaga.com/sites/www.varteaga.com/files/styles/large/public/field/image/".$imagen,
+                'cuerpo' => $cuerpo,
+                'comentarios' => $comentarios,
+                'fecha' => $fecha
+            );
+        }
+        echo json_encode($articulos);
+    }
+else{
+	echo "Que esperabas ver??";
+}
+}
